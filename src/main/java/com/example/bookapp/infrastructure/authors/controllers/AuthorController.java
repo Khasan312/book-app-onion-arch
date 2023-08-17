@@ -1,9 +1,8 @@
 package com.example.bookapp.infrastructure.authors.controllers;
 
+import com.example.bookapp.application.authors.AuthorDTO;
 import com.example.bookapp.application.authors.CreateAuthorInput;
 import com.example.bookapp.application.authors.CreateAuthorService;
-import com.example.bookapp.domain.authors.Author;
-import com.example.bookapp.domain.books.Book;
 import com.example.bookapp.infrastructure.authors.controllers.requests.AuthorRequest;
 import com.example.bookapp.infrastructure.authors.controllers.responses.AuthorResponse;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +20,7 @@ public class AuthorController {
     }
     @PostMapping("/create")
     public AuthorResponse createAuthor(@RequestBody AuthorRequest request) {
-        Author author = this.createAuthorService.createAuthor(new CreateAuthorInput(request.name));
-        return AuthorResponse.from(author);
+        AuthorDTO authorDTO = createAuthorService.createAuthor(new CreateAuthorInput(request.name));
+        return AuthorResponse.from(authorDTO);
     }
 }

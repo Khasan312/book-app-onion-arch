@@ -10,19 +10,16 @@ public class CreatePublishingHouseService {
         this.publishingHouses = publishingHouses;
     }
 
-    public PublishingHouse createPublishingHouse(CreatePublishingHouseInput input) {
+    public PublishingHouseDTO createPublishingHouse(CreatePublishingHouseInput input) {
         String name = input.name();
         Long publishingHouseCount = this.publishingHouses.countByName(name);
-
         PublishingHouse publishingHouse;
-
         if (publishingHouseCount != null && publishingHouseCount > 0) {
             publishingHouse = this.publishingHouses.getByName(name);
-        } else {
-            publishingHouse = new PublishingHouse(name);
-            this.publishingHouses.add(publishingHouse);
         }
+        publishingHouse = new PublishingHouse(name);
+        this.publishingHouses.add(publishingHouse);
 
-        return publishingHouse;
+        return PublishingHouseDTO.from(publishingHouse);
     }
 }

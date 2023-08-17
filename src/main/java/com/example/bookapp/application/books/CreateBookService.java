@@ -6,7 +6,6 @@ import com.example.bookapp.domain.books.Book;
 import com.example.bookapp.domain.books.Books;
 import com.example.bookapp.domain.publishing_houses.PublishingHouse;
 import com.example.bookapp.domain.publishing_houses.PublishingHouses;
-import jakarta.transaction.Transactional;
 
 public class CreateBookService {
     private final Authors authors;
@@ -19,12 +18,10 @@ public class CreateBookService {
         this.books = books;
     }
 
-    @Transactional
-    public Book createBook(CreateBookInput input) {
+
+    public BookDTO createBook(CreateBookInput input) {
         Author author = this.authors.getByUuid(input.bookBy().getAuthor());
         PublishingHouse publishingHouse = this.publishingHouses.getByUuid(input.bookBy().getPublishingHouse());
-
-
 
         Book book = new Book(input.info().title(),
                 input.info().quantity(),
@@ -33,7 +30,7 @@ public class CreateBookService {
                 publishingHouse);
         this.books.add(book);
 
-        return book;
+        return BookDTO.from(book);
 
 
     }

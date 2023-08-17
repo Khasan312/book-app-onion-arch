@@ -1,6 +1,6 @@
 package com.example.bookapp.infrastructure.books.controllers.responses;
 
-import com.example.bookapp.domain.books.Book;
+import com.example.bookapp.application.books.BookDTO;
 
 import java.util.UUID;
 
@@ -10,12 +10,12 @@ public class CreateBookResponse {
     public int quantity;
     public int year;
 
-    public static CreateBookResponse from(Book book) {
+    public static CreateBookResponse from(BookDTO bookDTO) {
         CreateBookResponse createBookResponse = new CreateBookResponse();
-        createBookResponse.uuid = book.getUuid();
-        createBookResponse.title = book.getTitle();
-        createBookResponse.quantity = book.getQuantity();
-        createBookResponse.year = book.getYear();
+        createBookResponse.uuid = bookDTO.getUuid();
+        createBookResponse.title = bookDTO.getTitle();
+        createBookResponse.quantity = bookDTO.getQuantity();
+        createBookResponse.year = bookDTO.getYear();
         return createBookResponse;
     }
 }

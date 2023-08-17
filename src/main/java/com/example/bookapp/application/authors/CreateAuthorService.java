@@ -11,23 +11,16 @@ public class CreateAuthorService {
         this.authors = authors;
     }
 
-    public Author createAuthor(CreateAuthorInput input) {
+    public AuthorDTO createAuthor(CreateAuthorInput input) {
         String name = input.name();
-        Long authorCount = this.authors.countByName(name);
-
         Author author;
+        author = authors.getByName(name);
 
-        if (authorCount != null && authorCount > 0) {
-            // Author already exists, retrieve and return the existing author
-            author = this.authors.getByName(name);
-        } else {
-            // Author doesn't exist, create a new author
-            author = new Author(name);
-
-            // Add the new author to the repository
-            this.authors.add(author);
+        if (author == null) {
+            throw new RuntimeException("Write a valid name");
         }
-
-        return author;
+        author = new Author(name);
+        this.authors.add(author);
+        return AuthorDTO.from(author);
     }
 }

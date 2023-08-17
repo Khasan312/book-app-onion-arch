@@ -2,6 +2,7 @@ package com.example.bookapp.infrastructure.publishing_houses.controllers;
 
 import com.example.bookapp.application.publishing_houses.CreatePublishingHouseInput;
 import com.example.bookapp.application.publishing_houses.CreatePublishingHouseService;
+import com.example.bookapp.application.publishing_houses.PublishingHouseDTO;
 import com.example.bookapp.domain.publishing_houses.PublishingHouse;
 import com.example.bookapp.infrastructure.publishing_houses.controllers.requests.PublishingHouseRequest;
 import com.example.bookapp.infrastructure.publishing_houses.controllers.responses.PublishingHouseResponse;
@@ -21,7 +22,7 @@ public class PublishingHouseController {
 
     @PostMapping("/create")
     public PublishingHouseResponse createPublishingHouse(@RequestBody PublishingHouseRequest request) {
-        PublishingHouse publishingHouse = createPublishingHouseService.createPublishingHouse(
+        PublishingHouseDTO publishingHouse = createPublishingHouseService.createPublishingHouse(
                 new CreatePublishingHouseInput(request.name));
         return PublishingHouseResponse.from(publishingHouse);
 
