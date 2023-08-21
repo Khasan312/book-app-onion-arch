@@ -59,6 +59,11 @@ public class Book {
         this.year = year;
     }
 
+    public void updateBy(Author author, PublishingHouse publishingHouse) {
+        this.author = author;
+        this.publishingHouse = publishingHouse;
+    }
+
     public String getTitle() {
         return title;
     }

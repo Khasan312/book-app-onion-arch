@@ -1,8 +1,11 @@
 package com.example.bookapp;
 
 import com.example.bookapp.application.authors.CreateAuthorService;
+import com.example.bookapp.application.authors.UpdateAuthorService;
 import com.example.bookapp.application.books.CreateBookService;
+import com.example.bookapp.application.books.UpdateBookService;
 import com.example.bookapp.application.publishing_houses.CreatePublishingHouseService;
+import com.example.bookapp.application.publishing_houses.UpdatePublishingHouseService;
 import com.example.bookapp.domain.authors.Authors;
 import com.example.bookapp.domain.books.Books;
 import com.example.bookapp.domain.publishing_houses.PublishingHouses;
@@ -21,6 +24,11 @@ public class ServicesConfig {
     }
 
     @Bean
+    public UpdateAuthorService updateAuthorService(Authors authors) {
+        return new UpdateAuthorService(authors);
+    }
+
+    @Bean
     public CreateAuthorService createAuthorService(Authors authors) {
         return new CreateAuthorService(authors);
     }
@@ -31,6 +39,10 @@ public class ServicesConfig {
     }
 
     @Bean
+    public UpdatePublishingHouseService updatePublishingHouseService(PublishingHouses publishingHouses) {
+        return new UpdatePublishingHouseService(publishingHouses);
+    }
+    @Bean
     public CreatePublishingHouseService createPublishingHouseService(PublishingHouses publishingHouses) {
         return new CreatePublishingHouseService(publishingHouses);
     }
@@ -38,6 +50,14 @@ public class ServicesConfig {
     @Bean
     public Books books(AuthorRepository authorRepository, PublishingHouseRepository publishingHouseRepository) {
         return new BookRepository(authorRepository, publishingHouseRepository);
+    }
+
+    @Bean
+    public UpdateBookService updateBookService(
+            Authors authors,
+            PublishingHouses publishingHouses,
+            Books books) {
+        return new UpdateBookService(authors, publishingHouses, books);
     }
 
     @Bean

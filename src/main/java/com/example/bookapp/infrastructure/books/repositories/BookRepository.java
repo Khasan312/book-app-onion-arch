@@ -33,7 +33,8 @@ public class BookRepository implements Books {
 
     @Override
     public void update(Book book) {
-
+        this.entityManager.persist(book);
+        this.entityManager.flush();
     }
 
     @Override

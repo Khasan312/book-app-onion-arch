@@ -1,5 +1,10 @@
 package com.example.bookapp.infrastructure.authors.controllers.requests;
 
-public class AuthorRequest {
+import java.util.UUID;
+
+public class UpdateAuthorRequest {
+    public UUID uuid;
     public String name;
+
+
 }
