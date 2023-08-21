@@ -29,6 +29,10 @@ public class PublishingHouse {
     public PublishingHouse(String name) {
         this.name = name;
     }
+
+    public void updatePublishingHouse(String name) {
+        this.name = name;
+    }
     public UUID getUuid() {
         return uuid;
     }
