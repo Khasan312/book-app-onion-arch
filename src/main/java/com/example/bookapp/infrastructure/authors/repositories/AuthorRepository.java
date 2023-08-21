@@ -39,6 +39,12 @@ public class AuthorRepository implements Authors {
     }
 
     @Override
+    public void update(Author author) {
+        this.entityManager.persist(author);
+        this.entityManager.flush();
+    }
+
+    @Override
     public List<Author> getAll() {
         return null;
     }
