@@ -7,6 +7,7 @@ import com.example.bookapp.infrastructure.books.controllers.requests.UpdateBookR
 import com.example.bookapp.infrastructure.books.controllers.responses.BookResponse;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -15,16 +16,19 @@ public class BookController {
 
     private final CreateBookService createBookService;
     private final UpdateBookService updatedBookService;
+    private final DeleteBookService deleteBookService;
 
 
     public BookController(CreateBookService createBookService,
-            UpdateBookService updatedBookService) {
+                          UpdateBookService updatedBookService,
+                          DeleteBookService deleteBookService) {
         this.createBookService = createBookService;
         this.updatedBookService = updatedBookService;
+        this.deleteBookService = deleteBookService;
     }
 
     @PostMapping("/create")
-    public BookResponse createBook(@RequestBody CreateBookRequest request) {
+    public BookResponse createBook(@Valid @RequestBody CreateBookRequest request) {
         BookInfo info = new BookInfo(request.title, request.quantity, request.year);
         BookBy bookBy = new BookBy(request.author, request.publishingHouse);
         CreateBookInput dto = new CreateBookInput(info, bookBy);
@@ -32,12 +36,18 @@ public class BookController {
         return BookResponse.from(createdBook);
     }
 
-    @PutMapping("/update/{uuid}")
-    public BookResponse updateBook(@PathVariable UUID uuid, @RequestBody UpdateBookRequest request) {
+    @PutMapping("/{uuid}")
+    public BookResponse updateBook(@PathVariable UUID uuid, @Valid @RequestBody UpdateBookRequest request) {
         BookInfo info = new BookInfo(request.title, request.quantity, request.year);
         BookBy bookBy = new BookBy(request.author, request.publishingHouse);
         UpdateBookInput dto = new UpdateBookInput(uuid,info, bookBy);
         BookDTO updatedBook = this.updatedBookService.updateBook(dto);
         return BookResponse.from(updatedBook);
+    }
+
+    @DeleteMapping("/delete/{uuid}")
+    public String deleteBook(@PathVariable UUID uuid) {
+        this.deleteBookService.deleteBook(new DeleteBookInput(uuid));
+        return "Book deleted";
     }
 }

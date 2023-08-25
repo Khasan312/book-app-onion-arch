@@ -35,7 +35,9 @@ public class AuthorRepository implements Authors {
 
     @Override
     public Author getByName(String name) {
-        return null;
+        return this.entityManager.createQuery(
+                "SELECT a FROM Author a WHERE a.name = :name", Author.class
+        ).setParameter("name", name).getSingleResult();
     }
 
     @Override
@@ -47,5 +49,10 @@ public class AuthorRepository implements Authors {
     @Override
     public List<Author> getAll() {
         return null;
+    }
+
+    @Override
+    public void delete(Author author) {
+        this.entityManager.remove(author);
     }
 }

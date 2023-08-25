@@ -44,4 +44,9 @@ public class BookRepository implements Books {
                 .setParameter("uuid", uuid)
                 .getSingleResult();
     }
+
+    @Override
+    public void delete(Book book) {
+        this.entityManager.remove(book);
+    }
 }

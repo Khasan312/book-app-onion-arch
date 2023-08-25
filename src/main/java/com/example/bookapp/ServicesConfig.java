@@ -1,10 +1,13 @@
 package com.example.bookapp;
 
 import com.example.bookapp.application.authors.CreateAuthorService;
+import com.example.bookapp.application.authors.DeleteAuthorService;
 import com.example.bookapp.application.authors.UpdateAuthorService;
 import com.example.bookapp.application.books.CreateBookService;
+import com.example.bookapp.application.books.DeleteBookService;
 import com.example.bookapp.application.books.UpdateBookService;
 import com.example.bookapp.application.publishing_houses.CreatePublishingHouseService;
+import com.example.bookapp.application.publishing_houses.DeletePublishingHouseService;
 import com.example.bookapp.application.publishing_houses.UpdatePublishingHouseService;
 import com.example.bookapp.domain.authors.Authors;
 import com.example.bookapp.domain.books.Books;
@@ -34,6 +37,10 @@ public class ServicesConfig {
     }
 
     @Bean
+    public DeleteAuthorService deleteAuthorService(Authors authors) {
+        return new DeleteAuthorService(authors);
+    }
+    @Bean
     public PublishingHouses publishingHouses() {
         return new PublishingHouseRepository();
     }
@@ -45,6 +52,10 @@ public class ServicesConfig {
     @Bean
     public CreatePublishingHouseService createPublishingHouseService(PublishingHouses publishingHouses) {
         return new CreatePublishingHouseService(publishingHouses);
+    }
+    @Bean
+    public DeletePublishingHouseService deletePublishingHouseService(PublishingHouses publishingHouses) {
+        return new DeletePublishingHouseService(publishingHouses);
     }
 
     @Bean
@@ -67,5 +78,10 @@ public class ServicesConfig {
             Books books
     ) {
         return new CreateBookService(authors, publishingHouses, books);
+    }
+
+    @Bean
+    public DeleteBookService deleteBookService(Books books) {
+        return new DeleteBookService(books);
     }
 }

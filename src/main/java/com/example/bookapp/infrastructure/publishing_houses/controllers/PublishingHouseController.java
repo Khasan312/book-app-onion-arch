@@ -6,6 +6,7 @@ import com.example.bookapp.infrastructure.publishing_houses.controllers.requests
 import com.example.bookapp.infrastructure.publishing_houses.controllers.responses.PublishingHouseResponse;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -13,11 +14,14 @@ import java.util.UUID;
 public class PublishingHouseController {
     private final CreatePublishingHouseService createPublishingHouseService;
     private final UpdatePublishingHouseService updatePublishingHouseService;
+    private final DeletePublishingHouseService deletePublishingHouseService;
 
     public PublishingHouseController(CreatePublishingHouseService createPublishingHouseService,
-            UpdatePublishingHouseService updatePublishingHouseService) {
+                                     UpdatePublishingHouseService updatePublishingHouseService,
+                                     DeletePublishingHouseService deletePublishingHouseService) {
         this.createPublishingHouseService = createPublishingHouseService;
         this.updatePublishingHouseService = updatePublishingHouseService;
+        this.deletePublishingHouseService = deletePublishingHouseService;
     }
 
     @PostMapping("/create")
@@ -27,15 +31,19 @@ public class PublishingHouseController {
         return PublishingHouseResponse.from(publishingHouse);
     }
 
-    @PutMapping("/update/{uuid}")
-    public PublishingHouseResponse updatePublishingHouse(
-            @PathVariable UUID uuid,
-            @RequestBody UpdatePublishingHouseRequest request) {
+    @PutMapping("/{uuid}")
+    public PublishingHouseResponse updatePublishingHouse(@PathVariable UUID uuid,
+                                                         @Valid @RequestBody UpdatePublishingHouseRequest request) {
         PublishingHouseDTO publishingHouseDTO =
                 this.updatePublishingHouseService.updatePublishingHouse(
-                        new UpdatePublishingHouseInput(uuid, request.name)
-                );
+                new UpdatePublishingHouseInput(uuid,request.name));
         return PublishingHouseResponse.from(publishingHouseDTO);
+    }
 
+    @DeleteMapping("/{uuid}")
+    public String deletePublishingHouse(@PathVariable UUID uuid) {
+        this.deletePublishingHouseService.deletePublishingHouse(
+                new DeletePublishingHouseInput(uuid));
+        return "Publishing house deleted";
     }
 }

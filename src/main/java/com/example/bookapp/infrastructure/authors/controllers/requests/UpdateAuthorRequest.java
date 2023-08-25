@@ -1,9 +1,10 @@
 package com.example.bookapp.infrastructure.authors.controllers.requests;
 
-import java.util.UUID;
+import javax.validation.constraints.NotNull;
 
 public class UpdateAuthorRequest {
-    public UUID uuid;
+
+    @NotNull
     public String name;
 
 
