@@ -35,6 +35,10 @@ public class Author {
         this.books = books;
     }
 
+    public void updateAuthor(String name) {
+        this.name = name;
+    }
+
     public UUID getUuid() {
         return uuid;
     }
