@@ -5,11 +5,15 @@ import com.example.bookapp.application.authors.DeleteAuthorService;
 import com.example.bookapp.application.authors.UpdateAuthorService;
 import com.example.bookapp.application.books.CreateBookService;
 import com.example.bookapp.application.books.DeleteBookService;
+import com.example.bookapp.application.books.GetBookService;
 import com.example.bookapp.application.books.UpdateBookService;
+import com.example.bookapp.application.books.translator.EnglishBookTranslator;
+import com.example.bookapp.application.books.translator.RussianBookTranslator;
 import com.example.bookapp.application.publishing_houses.CreatePublishingHouseService;
 import com.example.bookapp.application.publishing_houses.DeletePublishingHouseService;
 import com.example.bookapp.application.publishing_houses.UpdatePublishingHouseService;
 import com.example.bookapp.domain.authors.Authors;
+import com.example.bookapp.domain.books.BookTranslator;
 import com.example.bookapp.domain.books.Books;
 import com.example.bookapp.domain.publishing_houses.PublishingHouses;
 import com.example.bookapp.infrastructure.authors.repositories.AuthorRepository;
@@ -49,6 +53,22 @@ public class ServicesConfig {
     public UpdatePublishingHouseService updatePublishingHouseService(PublishingHouses publishingHouses) {
         return new UpdatePublishingHouseService(publishingHouses);
     }
+
+    @Bean
+    public GetBookService getBookService(Books books) {
+        return new GetBookService(books);
+    }
+
+    @Bean
+    public EnglishBookTranslator englishBookTranslator() {
+        return new EnglishBookTranslator();
+    }
+
+    @Bean
+    public RussianBookTranslator russianBookTranslator() {
+        return new RussianBookTranslator();
+    }
+
     @Bean
     public CreatePublishingHouseService createPublishingHouseService(PublishingHouses publishingHouses) {
         return new CreatePublishingHouseService(publishingHouses);

@@ -2,6 +2,7 @@ package com.example.bookapp.infrastructure.books.controllers;
 
 
 import com.example.bookapp.application.books.*;
+import com.example.bookapp.domain.books.BookTranslator;
 import com.example.bookapp.infrastructure.books.controllers.requests.CreateBookRequest;
 import com.example.bookapp.infrastructure.books.controllers.requests.UpdateBookRequest;
 import com.example.bookapp.infrastructure.books.controllers.responses.BookResponse;
@@ -17,14 +18,48 @@ public class BookController {
     private final CreateBookService createBookService;
     private final UpdateBookService updatedBookService;
     private final DeleteBookService deleteBookService;
+    private final GetBookService getBookService;
+    private final BookTranslator englishBookTranslator;
+    private final BookTranslator russianBookTranslator;
 
 
     public BookController(CreateBookService createBookService,
                           UpdateBookService updatedBookService,
-                          DeleteBookService deleteBookService) {
+                          DeleteBookService deleteBookService,
+                          GetBookService getBookService,
+                          BookTranslator englishBookTranslator,
+                          BookTranslator russianBookTranslator) {
         this.createBookService = createBookService;
         this.updatedBookService = updatedBookService;
         this.deleteBookService = deleteBookService;
+        this.getBookService = getBookService;
+        this.englishBookTranslator = englishBookTranslator;
+        this.russianBookTranslator = russianBookTranslator;
+    }
+
+    @GetMapping("/{uuid}/en")
+    public BookResponse getBookToEnglish(@PathVariable UUID uuid) {
+        BookDTO bookDTO = this.getBookService.getBook(new GetBookInput(uuid));
+        String translatedTitle = englishBookTranslator.translate(bookDTO.getTitle());
+        BookDTO dto = new BookDTO(
+                bookDTO.getUuid(),
+                translatedTitle,
+                bookDTO.getQuantity(),
+                bookDTO.getYear()
+        );
+        return BookResponse.from(dto);
+    }
+    @GetMapping("/{uuid}/ru")
+    public BookResponse getBookToRussian(@PathVariable UUID uuid) {
+        BookDTO bookDTO = this.getBookService.getBook(new GetBookInput(uuid));
+        String translatedTitle = russianBookTranslator.translate(bookDTO.getTitle());
+        BookDTO dto = new BookDTO(
+                bookDTO.getUuid(),
+                translatedTitle,
+                bookDTO.getQuantity(),
+                bookDTO.getYear()
+        );
+        return BookResponse.from(dto);
     }
 
     @PostMapping("/create")
