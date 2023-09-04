@@ -21,4 +21,5 @@ public class RussianBookTranslator implements BookTranslator {
         );
         return translation.getTranslatedText();
     }
+    //
 }

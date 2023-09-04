@@ -21,4 +21,5 @@ public class EnglishBookTranslator implements BookTranslator {
         );
         return translation.getTranslatedText();
     }
+    //
 }

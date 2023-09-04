@@ -48,6 +48,7 @@ public class BookController {
                 bookDTO.getYear()
         );
         return BookResponse.from(dto);
+        //
     }
     @GetMapping("/{uuid}/ru")
     public BookResponse getBookToRussian(@PathVariable UUID uuid) {
@@ -60,6 +61,7 @@ public class BookController {
                 bookDTO.getYear()
         );
         return BookResponse.from(dto);
+        //
     }
 
     @PostMapping("/create")
