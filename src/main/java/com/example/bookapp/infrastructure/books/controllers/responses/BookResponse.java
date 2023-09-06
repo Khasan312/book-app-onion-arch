@@ -1,6 +1,7 @@
 package com.example.bookapp.infrastructure.books.controllers.responses;
 
 import com.example.bookapp.application.books.BookDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.UUID;
 

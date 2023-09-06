@@ -9,6 +9,7 @@ import com.example.bookapp.infrastructure.books.controllers.responses.BookRespon
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,6 +22,7 @@ public class BookController {
     private final GetBookService getBookService;
     private final BookTranslator englishBookTranslator;
     private final BookTranslator russianBookTranslator;
+    private final BookListService bookListService;
 
 
     public BookController(CreateBookService createBookService,
@@ -28,13 +30,15 @@ public class BookController {
                           DeleteBookService deleteBookService,
                           GetBookService getBookService,
                           BookTranslator englishBookTranslator,
-                          BookTranslator russianBookTranslator) {
+                          BookTranslator russianBookTranslator,
+                          BookListService bookListService) {
         this.createBookService = createBookService;
         this.updatedBookService = updatedBookService;
         this.deleteBookService = deleteBookService;
         this.getBookService = getBookService;
         this.englishBookTranslator = englishBookTranslator;
         this.russianBookTranslator = russianBookTranslator;
+        this.bookListService = bookListService;
     }
 
     @GetMapping("/{uuid}/en")
@@ -68,7 +72,8 @@ public class BookController {
     public BookResponse createBook(@Valid @RequestBody CreateBookRequest request) {
         BookInfo info = new BookInfo(request.title, request.quantity, request.year);
         BookBy bookBy = new BookBy(request.author, request.publishingHouse);
-        CreateBookInput dto = new CreateBookInput(info, bookBy);
+
+        CreateBookInput dto = new CreateBookInput(info, bookBy, request.tags);
         BookDTO createdBook = createBookService.createBook(dto);
         return BookResponse.from(createdBook);
     }
@@ -86,5 +91,24 @@ public class BookController {
     public String deleteBook(@PathVariable UUID uuid) {
         this.deleteBookService.deleteBook(new DeleteBookInput(uuid));
         return "Book deleted";
+    }
+
+    @GetMapping("/")
+    public List<BookResponse> getBooks(
+            @RequestParam("tagUuid") UUID tagUuid,
+            @RequestParam("userId") Long userId,
+            @RequestParam(value = "sort", required = false) String sort,
+            @RequestParam(value = "author", required = false) UUID authorUuid,
+            @RequestParam(value = "publishingHouse", required = false) UUID publishingHouse
+    ) {
+        return this.bookListService.getBookList(
+                new BookListInput(
+                        tagUuid,
+                        sort,
+                        authorUuid,
+                        publishingHouse,
+                        userId
+                )
+        ).stream().map(BookResponse::from).toList();
     }
 }
