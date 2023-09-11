@@ -2,6 +2,8 @@ package com.example.bookapp.infrastructure.books.controllers;
 
 
 import com.example.bookapp.application.books.*;
+import com.example.bookapp.application.books.translator.EnglishBookTranslatorService;
+import com.example.bookapp.application.books.translator.RussianBookTranslatorService;
 import com.example.bookapp.domain.books.BookTranslator;
 import com.example.bookapp.infrastructure.books.controllers.requests.CreateBookRequest;
 import com.example.bookapp.infrastructure.books.controllers.requests.UpdateBookRequest;
@@ -20,8 +22,8 @@ public class BookController {
     private final UpdateBookService updatedBookService;
     private final DeleteBookService deleteBookService;
     private final GetBookService getBookService;
-    private final BookTranslator englishBookTranslator;
-    private final BookTranslator russianBookTranslator;
+    private final EnglishBookTranslatorService englishBookTranslator;
+    private final RussianBookTranslatorService russianBookTranslator;
     private final BookListService bookListService;
 
 
@@ -29,8 +31,8 @@ public class BookController {
                           UpdateBookService updatedBookService,
                           DeleteBookService deleteBookService,
                           GetBookService getBookService,
-                          BookTranslator englishBookTranslator,
-                          BookTranslator russianBookTranslator,
+                          EnglishBookTranslatorService englishBookTranslator,
+                          RussianBookTranslatorService russianBookTranslator,
                           BookListService bookListService) {
         this.createBookService = createBookService;
         this.updatedBookService = updatedBookService;
@@ -52,7 +54,7 @@ public class BookController {
                 bookDTO.getYear()
         );
         return BookResponse.from(dto);
-        //
+
     }
     @GetMapping("/{uuid}/ru")
     public BookResponse getBookToRussian(@PathVariable UUID uuid) {
@@ -65,7 +67,7 @@ public class BookController {
                 bookDTO.getYear()
         );
         return BookResponse.from(dto);
-        //
+
     }
 
     @PostMapping("/create")

@@ -6,8 +6,8 @@ import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-@Qualifier("fromEnglishToRussian")
-public class RussianBookTranslator implements BookTranslator {
+@Qualifier("fromRussianToEnglish")
+public class EnglishBookTranslatorService implements BookTranslator {
     @Override
     public String translate(String bookName) {
         Translate translate =  TranslateOptions.newBuilder()
@@ -16,8 +16,8 @@ public class RussianBookTranslator implements BookTranslator {
 
         Translation translation = translate.translate(
                 bookName,
-                Translate.TranslateOption.sourceLanguage("en"),
-                Translate.TranslateOption.targetLanguage("ru")
+                Translate.TranslateOption.sourceLanguage("ru"),
+                Translate.TranslateOption.targetLanguage("en")
         );
         return translation.getTranslatedText();
     }
