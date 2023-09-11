@@ -10,4 +10,5 @@ public interface Authors {
     Author getByName(String name);
     void update(Author author);
     List<Author> getAll();
+    void delete(Author author);
 }

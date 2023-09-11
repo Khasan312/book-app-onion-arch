@@ -25,9 +25,6 @@ public class UpdateBookService {
                 this.publishingHouses.getByUuid(input.bookBy().getPublishingHouse());
         Book book = this.books.getByUuid(input.uuid());
 
-        if (book == null) {
-            throw new RuntimeException("Book with UUID '" + input.uuid() + "' not found.");
-        }
         book.updateBook(input.info().title(),
                 input.info().quantity(),
                 input.info().year());

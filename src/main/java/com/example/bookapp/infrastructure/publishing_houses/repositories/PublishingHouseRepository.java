@@ -48,4 +48,9 @@ public class PublishingHouseRepository implements PublishingHouses {
     public List<PublishingHouse> getAll() {
         return null;
     }
+
+    @Override
+    public void delete(PublishingHouse publishingHouse) {
+        this.entityManager.remove(publishingHouse);
+    }
 }

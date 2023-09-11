@@ -2,6 +2,7 @@ package com.example.bookapp.domain.books;
 
 import com.example.bookapp.domain.authors.Author;
 import com.example.bookapp.domain.publishing_houses.PublishingHouse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -32,7 +33,6 @@ public class Book {
                 int quantity,
                 int year,
                 Author author, PublishingHouse publishingHouse) {
-        this.uuid = UUID.randomUUID();
         this.title = title;
         this.quantity = quantity;
         this.year = year;

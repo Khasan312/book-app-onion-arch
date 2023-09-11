@@ -10,4 +10,5 @@ public interface PublishingHouses {
     PublishingHouse getByUuid(UUID uuid);
     void update(PublishingHouse publishingHouse);
     List<PublishingHouse> getAll();
+    void delete(PublishingHouse publishingHouse);
 }

@@ -6,6 +6,7 @@ import com.example.bookapp.infrastructure.authors.controllers.requests.UpdateAut
 import com.example.bookapp.infrastructure.authors.controllers.responses.AuthorResponse;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -13,24 +14,32 @@ import java.util.UUID;
 public class AuthorController {
     private final CreateAuthorService createAuthorService;
     private final UpdateAuthorService updateAuthorService;
+    private final DeleteAuthorService deleteAuthorService;
 
     public AuthorController(CreateAuthorService createAuthorService,
-                            UpdateAuthorService updateAuthorService) {
+                            UpdateAuthorService updateAuthorService,
+                            DeleteAuthorService deleteAuthorService) {
         this.createAuthorService = createAuthorService;
         this.updateAuthorService = updateAuthorService;
+        this.deleteAuthorService = deleteAuthorService;
     }
     @PostMapping("/create")
-    public AuthorResponse createAuthor(@RequestBody CreateAuthorRequest request) {
+    public AuthorResponse createAuthor(@Valid @RequestBody CreateAuthorRequest request) {
         AuthorDTO authorDTO = createAuthorService.createAuthor(new CreateAuthorInput(request.name));
         return AuthorResponse.from(authorDTO);
     }
 
-    @PutMapping("/update/{uuid}")
+    @PutMapping("/{uuid}")
     public AuthorResponse updateAuthor(@PathVariable UUID uuid,
-                                       @RequestBody UpdateAuthorRequest request) {
+                                       @Valid @RequestBody UpdateAuthorRequest request) {
         AuthorDTO authorDTO = this.updateAuthorService.updateAuthor(
                 new UpdateAuthorInput(uuid,request.name));
         return AuthorResponse.from(authorDTO);
+    }
 
+    @DeleteMapping("/{uuid}")
+    public String deleteAuthor(@PathVariable UUID uuid) {
+        this.deleteAuthorService.deleteAuthor(new DeleteAuthorInput(uuid));
+        return "Author deleted";
     }
 }

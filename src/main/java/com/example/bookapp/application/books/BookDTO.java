@@ -1,14 +1,15 @@
 package com.example.bookapp.application.books;
 
 import com.example.bookapp.domain.books.Book;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.UUID;
 
 public class BookDTO {
-    private UUID uuid;
-    private String title;
-    private int quantity;
-    private int year;
+    private final UUID uuid;
+    private final String title;
+    private final int quantity;
+    private final int year;
 
     public BookDTO(UUID uuid, String title, int quantity, int year) {
         this.uuid = uuid;
