@@ -8,5 +8,7 @@ public interface Authors {
     Long countByName(String name);
     Author getByUuid(UUID uuid);
     Author getByName(String name);
+    void update(Author author);
     List<Author> getAll();
+    void delete(Author author);
 }
