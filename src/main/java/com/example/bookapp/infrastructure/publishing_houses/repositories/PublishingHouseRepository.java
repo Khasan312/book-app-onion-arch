@@ -40,7 +40,17 @@ public class PublishingHouseRepository implements PublishingHouses {
     }
 
     @Override
+    public void update(PublishingHouse publishingHouse) {
+
+    }
+
+    @Override
     public List<PublishingHouse> getAll() {
         return null;
+    }
+
+    @Override
+    public void delete(PublishingHouse publishingHouse) {
+        this.entityManager.remove(publishingHouse);
     }
 }

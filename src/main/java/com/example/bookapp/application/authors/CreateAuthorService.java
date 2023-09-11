@@ -14,13 +14,9 @@ public class CreateAuthorService {
     public AuthorDTO createAuthor(CreateAuthorInput input) {
         String name = input.name();
         Author author;
-        author = authors.getByName(name);
-
-        if (author == null) {
-            throw new RuntimeException("Write a valid name");
-        }
         author = new Author(name);
-        this.authors.add(author);
+        authors.add(author);
+
         return AuthorDTO.from(author);
     }
 }

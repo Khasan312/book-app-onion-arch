@@ -8,5 +8,7 @@ public interface PublishingHouses {
     Long countByName(String name);
     PublishingHouse getByName(String name);
     PublishingHouse getByUuid(UUID uuid);
+    void update(PublishingHouse publishingHouse);
     List<PublishingHouse> getAll();
+    void delete(PublishingHouse publishingHouse);
 }

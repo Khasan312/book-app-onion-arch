@@ -1,5 +1,8 @@
 package com.example.bookapp.infrastructure.authors.controllers.requests;
 
-public class AuthorRequest {
+import javax.validation.constraints.NotNull;
+
+public class CreateAuthorRequest {
+    @NotNull
     public String name;
 }

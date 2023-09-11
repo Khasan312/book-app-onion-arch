@@ -1,6 +1,9 @@
 package com.example.bookapp.infrastructure.publishing_houses.controllers.requests;
 
-public class PublishingHouseRequest {
+import javax.validation.constraints.NotNull;
+
+public class CreatePublishingHouseRequest {
+    @NotNull
     public String name;
 
 }
